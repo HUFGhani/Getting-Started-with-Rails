@@ -5,7 +5,7 @@ def index
 end
 
 def show 
-	 @article = Article.find(params[:id])
+	@article = Article.find(params[:id])
 end
 
 def new
@@ -17,7 +17,7 @@ def edit
 end
 
 def create
-	@article = Article.new(article_parmas)
+	@article = Article.new(article_params)
 	
 	if @article.save
 		redirect_to @article
@@ -29,15 +29,23 @@ end
 def update
 	@article = Article.find(params[:id])
 	
-	if @article.update(article_parmas)
+	if @article.update(article_params)
 		 redirect_to @article
 	 else
 		  render 'edit'
 	 end
 end
 
+def destroy
+	@article = Article.find(params[:id])
+	@article.destroy
+
+	#redirect_to articles_path #-this is what is said in the codeplace
+	redirect_to @article
+end 
+
 private
-def article_parmas
+def article_params
 	params.require(:article).permit(:title, :text)
 end
 
